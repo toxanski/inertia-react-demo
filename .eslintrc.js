@@ -13,6 +13,7 @@ module.exports = {
         // "plugin:import/recommended",
         'plugin:jsx-a11y/recommended',
         'eslint-config-prettier',
+        'prettier',
     ],
     globals: {
         React: 'writable',

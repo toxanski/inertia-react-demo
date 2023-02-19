@@ -1,5 +1,5 @@
-import { Header } from "../Header";
-import { Footer } from "../Footer";
+import { Header } from '../Header';
+import { Footer } from '../Footer';
 import { Breadcrumb, Layout } from 'antd';
 
 export const MainLayout = ({ children }) => {
@@ -8,14 +8,14 @@ export const MainLayout = ({ children }) => {
             <Header />
 
             <Layout.Content
-                // style={{
-                // padding: '0 50px',
-                // }}
+            // style={{
+            // padding: '0 50px',
+            // }}
             >
                 <Breadcrumb
-                    // style={{
-                    //     margin: '16px 0',
-                    // }}
+                // style={{
+                //     margin: '16px 0',
+                // }}
                 >
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                     <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -35,7 +35,7 @@ export const MainLayout = ({ children }) => {
             <Footer />
         </Layout>
     );
-}
+};
 
 // export const withLayout = (Component) => {
 //     return (...props) => (
