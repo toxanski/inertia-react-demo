@@ -7,8 +7,11 @@ import styled from '@emotion/styled';
 const HeaderContainer = styled(Layout.Header)`
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+
     &.header {
-        background-color: #7dbcea;
+        background-color: transparent;
     }
 
     .header__menu {
@@ -17,7 +20,6 @@ const HeaderContainer = styled(Layout.Header)`
 `;
 
 export const Header = () => (
-    // <header>123445</header>
     <HeaderContainer theme="light" className="header">
         <Logo />
 

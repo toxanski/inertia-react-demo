@@ -1,38 +1,41 @@
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { Breadcrumb, Layout } from 'antd';
+import styled from '@emotion/styled';
+
+const LayoutContainer = styled.div`
+    max-width: 1296px;
+    width: 100%;
+    margin: 0 auto;
+`;
+
+const BreadcrumWrapper = styled(Breadcrumb)`
+    margin: 20px 0;
+`;
 
 export const MainLayout = ({ children }) => {
     return (
-        <Layout>
-            <Header />
+        <Layout style={{ backgroundColor: 'white' }}>
+            <LayoutContainer>
+                <Header />
 
-            <Layout.Content
-            // style={{
-            // padding: '0 50px',
-            // }}
-            >
-                <Breadcrumb
-                // style={{
-                //     margin: '16px 0',
-                // }}
-                >
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
+                <Layout.Content>
+                    <BreadcrumWrapper>
+                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item>List</Breadcrumb.Item>
+                        <Breadcrumb.Item>App</Breadcrumb.Item>
+                    </BreadcrumWrapper>
 
-                <div
-                    className="site-layout-content"
-                    // style={{
-                    //     background: '#936969'
-                    // }}
-                >
-                    {children}
-                </div>
-            </Layout.Content>
+                    <div
+                        className="site-layout-content"
+                        style={{ height: '100%' }}
+                    >
+                        {children}
+                    </div>
+                </Layout.Content>
 
-            <Footer />
+                <Footer />
+            </LayoutContainer>
         </Layout>
     );
 };
