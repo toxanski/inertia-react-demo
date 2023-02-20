@@ -1,8 +1,14 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
+
+html, body, *::before, *::after {
+    margin: 0;
+    padding: 0;
+}
 
 :root {
-    --primary-color: #F1DF6F;
+    --primary-color: #FBC02D;
+    --bg-color: #f5f5f5;
 }

@@ -11,23 +11,17 @@ import {
     Select,
     Switch,
     TreeSelect,
-    ConfigProvider,
 } from 'antd';
+import { RootProvider } from '@/Layouts/RootProvider';
 
 export default function IndexPage() {
-    const [componentSize, setComponentSize] = useState('default');
+    const [componentSize, setComponentSize] = useState('large');
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);
     };
 
     return (
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: 'purple', // var(--primary)?
-                },
-            }}
-        >
+        <RootProvider>
             <MainLayout>
                 <Form
                     labelCol={{
@@ -100,13 +94,13 @@ export default function IndexPage() {
                         <InputNumber />
                     </Form.Item>
                     <Form.Item label="Switch" valuePropName="checked">
-                        <Switch style={{ backgroundColor: 'green' }} />
+                        <Switch />
                     </Form.Item>
                     <Form.Item label="Button">
                         <Button>Button</Button>
                     </Form.Item>
                 </Form>
             </MainLayout>
-        </ConfigProvider>
+        </RootProvider>
     );
 }

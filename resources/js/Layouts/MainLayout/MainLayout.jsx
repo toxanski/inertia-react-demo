@@ -2,6 +2,8 @@ import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { Breadcrumb, Layout } from 'antd';
 import styled from '@emotion/styled';
+import { useContext } from 'react';
+import { RootContext } from '@/Layouts/RootProvider';
 
 const LayoutContainer = styled.div`
     max-width: 1296px;
@@ -14,8 +16,12 @@ const BreadcrumWrapper = styled(Breadcrumb)`
 `;
 
 export const MainLayout = ({ children }) => {
+    const { styles } = useContext(RootContext);
+
     return (
-        <Layout style={{ backgroundColor: 'white' }}>
+        <Layout
+            style={{ backgroundColor: styles.getPropertyValue('--bg-color') }}
+        >
             <LayoutContainer>
                 <Header />
 
