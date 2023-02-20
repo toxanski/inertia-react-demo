@@ -11,6 +11,9 @@ import {
     Select,
     Switch,
     TreeSelect,
+    Card,
+    Avatar,
+    Divider,
 } from 'antd';
 import { RootProvider } from '@/Layouts/RootProvider';
 
@@ -23,6 +26,22 @@ export default function IndexPage() {
     return (
         <RootProvider>
             <MainLayout>
+                <Card
+                    style={{
+                        marginTop: 16,
+                    }}
+                >
+                    <Card.Meta
+                        avatar={
+                            <Avatar src="https://joesch.moe/api/v1/random" />
+                        }
+                        title="Card title"
+                        description="This is the description"
+                    />
+                </Card>
+
+                <Divider />
+
                 <Form
                     labelCol={{
                         span: 4,

@@ -1,13 +1,11 @@
-import { Layout } from "antd"; 
-
-console.log('asfdasf');
+import { Layout } from 'antd';
 
 export const Footer = () => (
     <Layout.Footer
         style={{
-          textAlign: 'center',
+            textAlign: 'right',
         }}
-      >
+    >
         @Ant Design ©2023 Created by Ant UED
     </Layout.Footer>
 );

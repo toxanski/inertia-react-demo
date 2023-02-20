@@ -1,14 +1,14 @@
 import { Logo } from '@/Components/Logo';
 // import { Button } from 'antd';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Button } from 'antd';
+import { Link } from '@inertiajs/react';
 
 import styled from '@emotion/styled';
 
 const HeaderContainer = styled(Layout.Header)`
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e8e8e8;
+    justify-content: space-between;
 
     &.header {
         background-color: transparent;
@@ -16,6 +16,7 @@ const HeaderContainer = styled(Layout.Header)`
 
     .header__menu {
         background-color: transparent;
+        border-bottom: none;
     }
 `;
 
@@ -28,14 +29,26 @@ export const Header = () => (
             items={[
                 {
                     key: '123',
-                    label: 'nav-item1',
+                    label: 'Найти кандидата',
                 },
                 {
                     key: '1234',
-                    label: 'nav-item2',
+                    label: 'Попасть в базу',
+                },
+                {
+                    key: '12415',
+                    label: 'О сервисе',
+                },
+                {
+                    key: '241616',
+                    label: 'Портал',
                 },
             ]}
             className="header__menu"
         />
+
+        <Button type="link">
+            <Link href={route('login')}>Войти</Link>
+        </Button>
     </HeaderContainer>
 );

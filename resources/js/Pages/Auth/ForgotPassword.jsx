@@ -1,4 +1,4 @@
-import GuestLayout from '@/Layouts/GuestLayout';
+import GuestLayout from '@/Layouts/GuestLayout(vendor)';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
@@ -24,11 +24,16 @@ export default function ForgotPassword({ status }) {
             <Head title="Forgot Password" />
 
             <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
+                Forgot your password? No problem. Just let us know your email
+                address and we will email you a password reset link that will
+                allow you to choose a new one.
             </div>
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
 
             <form onSubmit={submit}>
                 <TextInput

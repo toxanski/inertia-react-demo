@@ -1,14 +1,23 @@
 import { Header } from '../Header';
 import { Footer } from '../Footer';
-import { Breadcrumb, Layout } from 'antd';
+import { Breadcrumb, Layout, Divider } from 'antd';
 import styled from '@emotion/styled';
-import { useContext } from 'react';
-import { RootContext } from '@/Layouts/RootProvider';
+// import { useContext } from 'react';
+// import { RootContext } from '@/Layouts/RootProvider';
 
-const LayoutContainer = styled.div`
+const LayoutWrapper = styled(Layout)`
+    background-color: var(--bg-color);
+    min-height: 100vh;
+`;
+
+export const LayoutContainer = styled.div`
     max-width: 1296px;
     width: 100%;
     margin: 0 auto;
+`;
+
+const FooterContainer = styled(LayoutContainer)`
+    margin-top: auto;
 `;
 
 const BreadcrumWrapper = styled(Breadcrumb)`
@@ -16,16 +25,20 @@ const BreadcrumWrapper = styled(Breadcrumb)`
 `;
 
 export const MainLayout = ({ children }) => {
-    const { styles } = useContext(RootContext);
+    // const { styles } = useContext(RootContext);
 
     return (
-        <Layout
-            style={{ backgroundColor: styles.getPropertyValue('--bg-color') }}
-        >
+        <LayoutWrapper>
             <LayoutContainer>
                 <Header />
+            </LayoutContainer>
 
-                <Layout.Content>
+            <LayoutContainer>
+                <Divider style={{ margin: 0 }} />
+            </LayoutContainer>
+
+            <LayoutContainer>
+                <Layout.Content style={{ minHeight: '100%' }}>
                     <BreadcrumWrapper>
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
                         <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -39,10 +52,13 @@ export const MainLayout = ({ children }) => {
                         {children}
                     </div>
                 </Layout.Content>
-
-                <Footer />
             </LayoutContainer>
-        </Layout>
+
+            <FooterContainer>
+                <Divider style={{ margin: 0 }} />
+                <Footer />
+            </FooterContainer>
+        </LayoutWrapper>
     );
 };
 

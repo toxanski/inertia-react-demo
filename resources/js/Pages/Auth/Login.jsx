@@ -1,112 +1,141 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import { GuestLayout } from '@/Layouts/GuestLayout';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { RootProvider } from '@/Layouts/RootProvider';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import styled from '@emotion/styled';
+// import { useEffect } from 'react';
 
-export default function Login({ status, canResetPassword }) {
+const LoginForm = styled(Form)`
+    max-width: 300px;
+    margin: 0 auto;
+`;
+
+const LoginFormForgot = styled('a')`
+    float: right;
+`;
+
+const LoginFormButton = styled(Button)`
+    width: 100%;
+`;
+
+// eslint-disable-next-line no-unused-vars
+export default function Login({ canResetPassword, status }) {
+    // eslint-disable-next-line no-unused-vars
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: '',
+        remember: false,
     });
 
-    useEffect(() => {
-        return () => {
-            reset('password');
-        };
-    }, []);
+    // useEffect(() => {
+    //     console.log('@data', data);
+    //     console.log('@errors', errors);
+    // }, [data, errors]);
 
-    const onHandleChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === 'checkbox'
-                ? event.target.checked
-                : event.target.value
-        );
+    const onHandleInputChange = (e) => {
+        setData(e.target.name, e.target.value);
     };
 
-    const submit = (e) => {
+    const onHandleCheckboxChange = (e) => {
+        setData(e.target.name, e.target.checked);
+    };
+
+    const formSubmit = (e) => {
         e.preventDefault();
 
         post(route('login'));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
-
-            {status && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    {status}
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        handleChange={onHandleChange}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            value={data.remember}
-                            handleChange={onHandleChange}
+        <RootProvider>
+            <GuestLayout>
+                <LoginForm
+                    name="normal_login"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    autoComplete="off"
+                    size="large"
+                    onSubmit={formSubmit}
+                >
+                    <Form.Item
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Email!',
+                            },
+                        ]}
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input
+                            name="email"
+                            type="email"
+                            placeholder="Username"
+                            prefix={
+                                <MailOutlined className="site-form-item-icon" />
+                            }
+                            onChange={onHandleInputChange}
                         />
-                        <span className="ml-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Password!',
+                            },
+                        ]}
+                        validateStatus={errors.password && 'error'}
+                        help={errors.password}
+                    >
+                        <Input.Password
+                            prefix={
+                                <LockOutlined className="site-form-item-icon" />
+                            }
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            onChange={onHandleInputChange}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Form.Item
+                            name="remember"
+                            valuePropName="checked"
+                            noStyle
                         >
-                            Forgot your password?
-                        </Link>
-                    )}
+                            <Checkbox
+                                name="remember"
+                                onChange={onHandleCheckboxChange}
+                            >
+                                Remember me
+                            </Checkbox>
+                        </Form.Item>
 
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+                        <LoginFormForgot
+                            className="login-form-forgot"
+                            href="#!"
+                        >
+                            Forgot password
+                        </LoginFormForgot>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <LoginFormButton
+                            type="primary"
+                            htmlType="submit"
+                            disabled={processing}
+                            onClick={formSubmit}
+                        >
+                            Log in
+                        </LoginFormButton>
+                        Or <a href="#!">register now!</a>
+                    </Form.Item>
+                </LoginForm>
+            </GuestLayout>
+        </RootProvider>
     );
 }
