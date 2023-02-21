@@ -23,7 +23,7 @@ export function HeaderIsAuth({ username }) {
                     {username}
                 </Typography.Title>
             </UserInfo>
-            <Link href={route('logout')} method="post">
+            <Link href={route('logout')} method="post" as="button">
                 Logout
             </Link>
         </Container>
