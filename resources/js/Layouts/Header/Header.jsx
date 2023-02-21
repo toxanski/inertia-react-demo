@@ -1,9 +1,11 @@
 import { Logo } from '@/Components/Logo';
 // import { Button } from 'antd';
-import { Menu, Layout, Button } from 'antd';
-import { Link } from '@inertiajs/react';
+import { Menu, Layout } from 'antd';
 
 import styled from '@emotion/styled';
+import { useAuth } from '@/hooks/useAuth';
+import { HeaderNotAuth } from './HeaderNotAuth';
+import { HeaderIsAuth } from './HeaderIsAuth';
 
 const HeaderContainer = styled(Layout.Header)`
     display: flex;
@@ -20,35 +22,37 @@ const HeaderContainer = styled(Layout.Header)`
     }
 `;
 
-export const Header = () => (
-    <HeaderContainer theme="light" className="header">
-        <Logo />
+export const Header = () => {
+    const { user } = useAuth();
 
-        <Menu
-            mode="horizontal"
-            items={[
-                {
-                    key: '123',
-                    label: 'Найти кандидата',
-                },
-                {
-                    key: '1234',
-                    label: 'Попасть в базу',
-                },
-                {
-                    key: '12415',
-                    label: 'О сервисе',
-                },
-                {
-                    key: '241616',
-                    label: 'Портал',
-                },
-            ]}
-            className="header__menu"
-        />
+    return (
+        <HeaderContainer theme="light" className="header">
+            <Logo />
 
-        <Button type="link">
-            <Link href={route('login')}>Войти</Link>
-        </Button>
-    </HeaderContainer>
-);
+            <Menu
+                mode="horizontal"
+                items={[
+                    {
+                        key: '123',
+                        label: 'Найти кандидата',
+                    },
+                    {
+                        key: '1234',
+                        label: 'Попасть в базу',
+                    },
+                    {
+                        key: '12415',
+                        label: 'О сервисе',
+                    },
+                    {
+                        key: '241616',
+                        label: 'Портал',
+                    },
+                ]}
+                className="header__menu"
+            />
+
+            {user ? <HeaderIsAuth username={user.name} /> : <HeaderNotAuth />}
+        </HeaderContainer>
+    );
+};

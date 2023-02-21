@@ -1,14 +1,16 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, Link } from '@inertiajs/react';
 import { GuestLayout } from '@/Layouts/GuestLayout';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { RootProvider } from '@/Layouts/RootProvider';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
+import { Typography } from 'antd';
+
 // import { useEffect } from 'react';
 
 const LoginForm = styled(Form)`
-    max-width: 300px;
-    margin: 0 auto;
+    max-width: 360px;
+    margin: 4rem auto 0;
 `;
 
 const LoginFormForgot = styled('a')`
@@ -19,14 +21,17 @@ const LoginFormButton = styled(Button)`
     width: 100%;
 `;
 
+const initialState = {
+    email: '',
+    password: '',
+    remember: false,
+};
+
 // eslint-disable-next-line no-unused-vars
 export default function Login({ canResetPassword, status }) {
     // eslint-disable-next-line no-unused-vars
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false,
-    });
+    const { data, setData, post, processing, errors, reset } =
+        useForm(initialState);
 
     // useEffect(() => {
     //     console.log('@data', data);
@@ -50,6 +55,9 @@ export default function Login({ canResetPassword, status }) {
     return (
         <RootProvider>
             <GuestLayout>
+                <Typography.Title style={{ textAlign: 'center' }}>
+                    Sign In
+                </Typography.Title>
                 <LoginForm
                     name="normal_login"
                     initialValues={{
@@ -60,7 +68,7 @@ export default function Login({ canResetPassword, status }) {
                     onSubmit={formSubmit}
                 >
                     <Form.Item
-                        name="username"
+                        name="email-label"
                         rules={[
                             {
                                 required: true,
@@ -73,7 +81,7 @@ export default function Login({ canResetPassword, status }) {
                         <Input
                             name="email"
                             type="email"
-                            placeholder="Username"
+                            placeholder="Email"
                             prefix={
                                 <MailOutlined className="site-form-item-icon" />
                             }
@@ -115,10 +123,7 @@ export default function Login({ canResetPassword, status }) {
                             </Checkbox>
                         </Form.Item>
 
-                        <LoginFormForgot
-                            className="login-form-forgot"
-                            href="#!"
-                        >
+                        <LoginFormForgot href="#!">
                             Forgot password
                         </LoginFormForgot>
                     </Form.Item>
@@ -132,7 +137,7 @@ export default function Login({ canResetPassword, status }) {
                         >
                             Log in
                         </LoginFormButton>
-                        Or <a href="#!">register now!</a>
+                        Or <Link href={route('register')}>register now!</Link>
                     </Form.Item>
                 </LoginForm>
             </GuestLayout>

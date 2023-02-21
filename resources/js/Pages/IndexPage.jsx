@@ -1,5 +1,6 @@
 import { MainLayout } from '@/Layouts/MainLayout';
-import { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { useContext, useState } from 'react';
 import {
     Button,
     Cascader,
@@ -17,7 +18,8 @@ import {
 } from 'antd';
 import { RootProvider } from '@/Layouts/RootProvider';
 
-export default function IndexPage() {
+export default function IndexPage({ auth: { user } }) {
+    //FIXME: ререндер всей страницы
     const [componentSize, setComponentSize] = useState('large');
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);
@@ -25,7 +27,7 @@ export default function IndexPage() {
 
     return (
         <RootProvider>
-            <MainLayout>
+            <MainLayout authUser={user}>
                 <Card
                     style={{
                         marginTop: 16,

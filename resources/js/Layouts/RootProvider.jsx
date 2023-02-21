@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/context/AuthProvider';
 import { ConfigProvider } from 'antd';
 import { createContext, useContext } from 'react';
 
@@ -12,16 +13,18 @@ export function RootProvider({ children }) {
 
     return (
         <RootContext.Provider value={root}>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary:
-                            root.styles.getPropertyValue('--primary-color'),
-                    },
-                }}
-            >
-                {children}
-            </ConfigProvider>
+            <AuthProvider>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary:
+                                root.styles.getPropertyValue('--primary-color'),
+                        },
+                    }}
+                >
+                    {children}
+                </ConfigProvider>
+            </AuthProvider>
         </RootContext.Provider>
     );
 }

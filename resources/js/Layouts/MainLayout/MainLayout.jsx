@@ -2,8 +2,9 @@ import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { Breadcrumb, Layout, Divider } from 'antd';
 import styled from '@emotion/styled';
-// import { useContext } from 'react';
-// import { RootContext } from '@/Layouts/RootProvider';
+import { useAuth } from '@/hooks/useAuth';
+// eslint-disable-next-line no-unused-vars
+import { useEffect } from 'react';
 
 const LayoutWrapper = styled(Layout)`
     background-color: var(--bg-color);
@@ -24,8 +25,15 @@ const BreadcrumWrapper = styled(Breadcrumb)`
     margin: 20px 0;
 `;
 
-export const MainLayout = ({ children }) => {
-    // const { styles } = useContext(RootContext);
+export const MainLayout = ({ children, authUser }) => {
+    const { user, setUser } = useAuth();
+
+    useEffect(() => {
+        // console.log('>>authUser', authUser);
+        //Todo: исправить, сначало {} (из initial state), затем инфа об авториз. юзере
+        setUser(authUser);
+        // console.log('>>user', user);
+    }, [user]);
 
     return (
         <LayoutWrapper>

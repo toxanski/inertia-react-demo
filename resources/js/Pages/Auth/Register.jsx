@@ -1,132 +1,169 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout(vendor)';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { RootProvider } from '@/Layouts/RootProvider';
+import { GuestLayout } from '@/Layouts/GuestLayout';
+import { Typography, Form, Input, Button } from 'antd';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { useForm, Link } from '@inertiajs/react';
+import styled from '@emotion/styled';
+
+const RegisterForm = styled(Form)`
+    max-width: 360px;
+    margin: 4rem auto 0;
+`;
+
+const RegisterFormButton = styled(Button)`
+    width: 100%;
+`;
+
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+};
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+    // eslint-disable-next-line no-unused-vars
+    const { data, setData, post, processing, errors } = useForm(initialState);
 
-    useEffect(() => {
-        return () => {
-            reset('password', 'password_confirmation');
-        };
-    }, []);
-
-    const onHandleChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === 'checkbox'
-                ? event.target.checked
-                : event.target.value
-        );
-    };
-
-    const submit = (e) => {
+    const formSubmit = (e) => {
         e.preventDefault();
 
         post(route('register'));
     };
 
+    const onHandleInputChange = (e) => {
+        setData(e.target.name, e.target.value);
+    };
+
     return (
-        <GuestLayout>
-            <Head title="Register" />
+        <RootProvider>
+            <GuestLayout>
+                <Typography.Title style={{ textAlign: 'center' }}>
+                    Sign Up
+                </Typography.Title>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        forInput="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <RegisterForm
+                    name="normal_register"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    autoComplete="off"
+                    size="large"
+                    onSubmit={formSubmit}
+                >
+                    <Form.Item
+                        name="email-label"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Email!',
+                            },
+                        ]}
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
                     >
-                        Already registered?
-                    </Link>
+                        <Input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            prefix={<MailOutlined />}
+                            onChange={onHandleInputChange}
+                        />
+                    </Form.Item>
 
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+                    <Form.Item
+                        name="name-label"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Username!',
+                            },
+                        ]}
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input
+                            name="name"
+                            type="text"
+                            placeholder="Username"
+                            prefix={<UserOutlined />}
+                            onChange={onHandleInputChange}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="password-label"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Password!',
+                            },
+                        ]}
+                        validateStatus={errors.password && 'error'}
+                        help={errors.password}
+                    >
+                        <Input.Password
+                            prefix={<LockOutlined />}
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            onChange={onHandleInputChange}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="confirm-password"
+                        dependencies={['password-label']}
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Password!',
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, currentValue) {
+                                    if (
+                                        !currentValue ||
+                                        getFieldValue('password-label') ===
+                                            currentValue
+                                    ) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(
+                                        new Error(
+                                            'The two passwords that you entered do not match!'
+                                        )
+                                    );
+                                },
+                            }),
+                        ]}
+                    >
+                        <Input.Password
+                            prefix={<LockOutlined />}
+                            type="password"
+                            name="password_confirmation"
+                            placeholder="Confirm Password"
+                            onChange={onHandleInputChange}
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <RegisterFormButton
+                            type="primary"
+                            htmlType="submit"
+                            disabled={processing}
+                            onClick={formSubmit}
+                        >
+                            Register
+                        </RegisterFormButton>
+                        <div>
+                            Already have an account?{' '}
+                            <Link href={route('login')}>SIGN IN</Link>
+                        </div>
+                    </Form.Item>
+                </RegisterForm>
+            </GuestLayout>
+        </RootProvider>
     );
 }
