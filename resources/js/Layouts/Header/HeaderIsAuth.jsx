@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
+import { Typography, Button } from 'antd';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
@@ -23,9 +23,13 @@ export function HeaderIsAuth({ username }) {
                     {username}
                 </Typography.Title>
             </UserInfo>
-            <Link href={route('logout')} method="post" as="button">
-                Logout
-            </Link>
+
+            <Button>
+                {/* TODO: переопределить кнопку от Link, чтобы она рисовала кнопку Ant Design */}
+                <Link href={route('logout')} method="post">
+                    Logout
+                </Link>
+            </Button>
         </Container>
     );
 }

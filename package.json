@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && vite build --ssr",
+        "build:csr": "vite build",
         "lint": "eslint . --ext .js,.jsx"
     },
     "devDependencies": {
