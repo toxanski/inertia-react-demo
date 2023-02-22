@@ -10,13 +10,14 @@ import {
     InputNumber,
     Radio,
     Select,
-    Switch,
     TreeSelect,
     Card,
     Avatar,
     Divider,
+    Switch,
 } from 'antd';
 import { RootProvider } from '@/Layouts/RootProvider';
+import { ThemeToggler } from '@/Components/ThemeToggler';
 
 export default function IndexPage({ auth: { user } }) {
     //FIXME: ререндер всей страницы
@@ -41,6 +42,12 @@ export default function IndexPage({ auth: { user } }) {
                         description="This is the description"
                     />
                 </Card>
+
+                <Divider />
+
+                <div>
+                    <ThemeToggler />
+                </div>
 
                 <Divider />
 
